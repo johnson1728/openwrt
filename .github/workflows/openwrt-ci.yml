@@ -47,6 +47,12 @@ jobs:
           sudo -E apt-get -y autoremove --purge
           sudo -E apt-get clean
 
+      - name: passwall
+        run: |
+          cd package
+          git clone https://github.com/kenzok8/openwrt-packages.git
+          git clone https://github.com/kenzok8/small.git
+
           # sudo mkdir -p -m 777 /mnt/openwrt/bin /mnt/openwrt/build_dir/host /mnt/openwrt/build_dir/hostpkg /mnt/openwrt/dl /mnt/openwrt/feeds /mnt/openwrt/staging_dir
           # ln -s /mnt/openwrt/bin ./bin
           # mkdir -p ./build_dir
@@ -76,6 +82,16 @@ jobs:
           CONFIG_TARGET_IMAGES_GZIP=y
           CONFIG_KERNEL_BUILD_USER="OpenWrt-CI"
           CONFIG_KERNEL_BUILD_DOMAIN="Azure"
+          CONFIG_TARGET_x86=y
+          CONFIG_TARGET_x86_64=y
+          CONFIG_TARGET_x86_64_Generic=y
+          CONFIG_PACKAGE_luci-app-passwall=y
+          CONFIG_PACKAGE_luci-app-passwall_INCLUDE_V2ray=y
+          CONFIG_PACKAGE_luci-app-passwall_INCLUDE_X2ray=y
+          CONFIG_PACKAGE_luci-app-passwall_INCLUDE_Trojan_Go=y
+          CONFIG_PACKAGE_luci-app-passwall_INCLUDE_Trojan_Plus=y
+          CONFIG_PACKAGE_luci-app-passwall_INCLUDE_haproxy=y
+          CONFIG_PACKAGE_luci-app-passwall_INCLUDE_ChinaDNS_NG=y
           EOF
 
           #
@@ -93,7 +109,7 @@ jobs:
 
       - name: Compile firmware
         run: |
-          make -j$(nproc) || make -j1 V=s
+          make package/openwrt-package/luci-app-passwall/compile -j$(nproc) || make -j1 V=s
           echo "======================="
           echo "Space usage:"
           echo "======================="
