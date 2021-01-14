@@ -109,7 +109,8 @@ jobs:
 
       - name: Compile firmware
         run: |
-          make ./package/openwrt-packages/luci-app-passwall/compile -j1 V=s
+          make -j$(nproc) || make -j1 V=s
+#          make ./package/openwrt-packages/luci-app-passwall/compile -j1 V=s
           echo "======================="
           echo "Space usage:"
           echo "======================="
