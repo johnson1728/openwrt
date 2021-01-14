@@ -109,7 +109,7 @@ jobs:
 
       - name: Compile firmware
         run: |
-          make package/openert-package/luci-app-passwall/compile -j$(nproc) || make -j1 V=s
+          make ./package/openert-package/luci-app-passwall/compile -j1 V=s
           echo "======================="
           echo "Space usage:"
           echo "======================="
