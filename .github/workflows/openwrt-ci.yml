@@ -9,7 +9,6 @@
 
 name: OpenWrt-CI
 
-
 on:
   push:
     branches: 
@@ -101,6 +100,7 @@ jobs:
 
           sed -i 's/^[ \t]*//g' ./.config
           make defconfig
+          make menuconfig
 
       - name: Make download
         run: |
